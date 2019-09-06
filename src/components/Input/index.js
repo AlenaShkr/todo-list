@@ -1,49 +1,51 @@
 import React, { useState } from "react";
-import Input from './Input';
+import Input from "./Input";
 import PropTypes from "prop-types";
 
-const InputContainer = ({addItemHandler, filterItemsHandler, clearTextFilter}) => {
-    const [text, setText] = useState('');
+const InputContainer = ({
+  addItemHandler,
+  filterItemsHandler,
+  clearTextFilter
+}) => {
+  const [text, setText] = useState("");
 
-    const addItem = () => {
-        addItemHandler(text);
-    };
+  const clearInput = () => {
+    setText("");
+    clearTextFilter();
+  };
 
-    const handleChange = (event) => {
-        const newText = event.target.value;
-        setText(newText);
-        filterItemsHandler(newText);
-    };
+  const addItem = () => {
+    addItemHandler(text);
+    clearInput();
+  };
 
-    const handleKeyPress = (event) => {
-        if (text && event.charCode === 13) {
-            addItemHandler(text);
-        }
-    };
+  const handleChange = event => {
+    const newText = event.target.value;
+    setText(newText);
+    filterItemsHandler(newText);
+  };
 
-    const clearInput = () => {
-        setText('');
-        clearTextFilter();
-    };
+  const handleKeyPress = event => {
+    if (text && event.charCode === 13) {
+      addItemHandler(text);
+    }
+  };
 
-
-    return (
-        <Input
-            value={text}
-            onKeyPress={handleKeyPress}
-            handleChange={handleChange}
-            addItemHandler={addItem}
-            clearInputHandler={clearInput}
-        />
-    );
-
-}
-
+  return (
+    <Input
+      value={text}
+      onKeyPress={handleKeyPress}
+      handleChange={handleChange}
+      addItemHandler={addItem}
+      clearInputHandler={clearInput}
+    />
+  );
+};
 
 InputContainer.propTypes = {
-    addItemHandler: PropTypes.func.isRequired,
-    filterItemsHandler: PropTypes.func.isRequired,
-    clearTextFilter: PropTypes.func.isRequired
+  addItemHandler: PropTypes.func.isRequired,
+  filterItemsHandler: PropTypes.func.isRequired,
+  clearTextFilter: PropTypes.func.isRequired
 };
 
 export default InputContainer;
